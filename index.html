@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3D Love Experience</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+body{
+background:linear-gradient(-45deg,#ff4e8b,#8e44ad,#1e3c72,#ff0080);
+background-size:400% 400%;
+animation:gradient 18s ease infinite;
+color:white;
+overflow-x:hidden;
+scroll-behavior:smooth;
+}
+@keyframes gradient{
+0%{background-position:0% 50%;}
+50%{background-position:100% 50%;}
+100%{background-position:0% 50%;}
+}
+
+#progress{
+position:fixed;
+top:0;left:0;height:5px;background:white;width:0%;z-index:9999;
+}
+
+#lock{
+position:fixed;width:100%;height:100%;
+background:black;display:flex;
+justify-content:center;align-items:center;
+flex-direction:column;z-index:10000;
+}
+#lock input{padding:10px;border-radius:10px;border:none;margin:10px;}
+
+section{
+min-height:100vh;
+display:flex;flex-direction:column;
+justify-content:center;align-items:center;
+padding:40px;text-align:center;
+background:rgba(255,255,255,0.08);
+backdrop-filter:blur(20px);
+}
+
+h1{margin-bottom:20px;text-shadow:0 0 20px pink;}
+
+button{
+padding:10px 20px;border:none;
+border-radius:25px;background:white;
+color:#ff0080;font-weight:bold;
+cursor:pointer;margin:10px;
+}
+
+/* Bottom Nav */
+nav{
+position:fixed;
+bottom:0;left:0;width:100%;
+display:flex;justify-content:space-around;
+background:rgba(0,0,0,0.8);
+padding:10px;z-index:5000;
+}
+nav button{background:none;color:white;font-size:14px}
+
+/* Slideshow */
+#slide{width:250px;border-radius:20px;transition:1s;}
+
+/* Click Flip Cards */
+.flip-card{
+width:220px;height:280px;
+perspective:1000px;margin:20px;
+}
+.flip-inner{
+position:relative;width:100%;height:100%;
+transition:transform 0.8s;
+transform-style:preserve-3d;
+}
+.flip-card.flipped .flip-inner{
+transform:rotateY(180deg);
+}
+.flip-front,.flip-back{
+position:absolute;width:100%;height:100%;
+backface-visibility:hidden;
+border-radius:20px;
+overflow:hidden;
+}
+.flip-front img{width:100%;height:100%;object-fit:cover;}
+.flip-back{
+background:black;
+display:flex;justify-content:center;
+align-items:center;padding:20px;
+transform:rotateY(180deg);
+}
+
+/* 3D Cube */
+.cube{
+position:relative;
+width:200px;height:200px;
+transform-style:preserve-3d;
+animation:rotate 10s infinite linear;
+}
+.cube img{
+position:absolute;width:200px;height:200px;
+object-fit:cover;
+}
+.cube img:nth-child(1){transform:rotateY(0deg) translateZ(100px);}
+.cube img:nth-child(2){transform:rotateY(90deg) translateZ(100px);}
+.cube img:nth-child(3){transform:rotateY(180deg) translateZ(100px);}
+.cube img:nth-child(4){transform:rotateY(270deg) translateZ(100px);}
+@keyframes rotate{
+from{transform:rotateX(0) rotateY(0);}
+to{transform:rotateX(360deg) rotateY(360deg);}
+}
+
+/* Timeline */
+.timeline{margin-top:20px}
+.timeline div{
+margin:15px;padding:10px 20px;
+background:rgba(0,0,0,0.4);
+border-radius:20px;
+}
+
+/* Running NO */
+#no{position:absolute;background:red;color:white}
+
+/* Fireworks */
+.fire{
+position:fixed;
+font-size:25px;
+animation:explode 1s forwards;
+}
+@keyframes explode{
+0%{opacity:1;transform:scale(1);}
+100%{opacity:0;transform:scale(3);}
+}
+
+</style>
+</head>
+<body>
+
+<div id="progress"></div>
+
+<div id="lock">
+<h2 style="color:white;">Enter Password ❤️</h2>
+<input type="password" id="pass">
+<button onclick="unlock()">Unlock</button>
+<p id="error" style="color:red;"></p>
+</div>
+
+<!-- HERO -->
+<section id="home">
+<h1>Welcome My Universe 💖</h1>
+<img id="slide" src="shivani1.jpg">
+</section>
+
+<!-- STORY -->
+<section id="story">
+<h1>Our Story ✨</h1>
+<p id="typing"></p>
+<div id="counter">Love Seconds: 0</div>
+</section>
+
+<!-- FLIP CARDS -->
+<section id="memories">
+<h1>Flip Memories 🎴</h1>
+<div style="display:flex;flex-wrap:wrap;justify-content:center;">
+<div class="flip-card" onclick="flip(this)">
+<div class="flip-inner">
+<div class="flip-front"><img src="shivani1.jpg"></div>
+<div class="flip-back">That Smile 💖</div>
+</div></div>
+
+<div class="flip-card" onclick="flip(this)">
+<div class="flip-inner">
+<div class="flip-front"><img src="shivani2.jpg"></div>
+<div class="flip-back">Best Moment ✨</div>
+</div></div>
+</div>
+</section>
+
+<!-- 3D CUBE -->
+<section>
+<h1>3D Memory Cube</h1>
+<div class="cube">
+<img src="shivani1.jpg">
+<img src="shivani2.jpg">
+<img src="shivani3.jpg">
+<img src="me.jpg">
+</div>
+</section>
+
+<!-- TIMELINE -->
+<section>
+<h1>Our Timeline 💌</h1>
+<div class="timeline">
+<div>First Smile 😊</div>
+<div>First Call 📞</div>
+<div>First Memory 📸</div>
+<div>Forever Promise 💍</div>
+</div>
+</section>
+
+<!-- PROPOSAL -->
+<section style="position:relative;">
+<h1>Will You Stay Forever? 💍</h1>
+<button onclick="celebrate()">YES</button>
+<button id="no">NO</button>
+</section>
+
+<nav>
+<button onclick="scrollToSec('home')">Home</button>
+<button onclick="scrollToSec('memories')">Memories</button>
+<button onclick="scrollToSec('story')">Story</button>
+</nav>
+
+<script>
+
+/* PASSWORD */
+const password="shivvu";
+function unlock(){
+if(document.getElementById("pass").value===password){
+document.getElementById("lock").style.display="none";
+}else{
+document.getElementById("error").innerText="Wrong Password 💔";
+}
+}
+
+/* Scroll Progress */
+window.onscroll=function(){
+let s=document.documentElement.scrollTop;
+let h=document.documentElement.scrollHeight-document.documentElement.clientHeight;
+document.getElementById("progress").style.width=(s/h*100)+"%";
+};
+
+/* Slideshow */
+const imgs=["shivani1.jpg","shivani2.jpg","shivani3.jpg","me.jpg"];
+let i=0;
+setInterval(()=>{
+i=(i+1)%imgs.length;
+document.getElementById("slide").src=imgs[i];
+},3000);
+
+/* Typing */
+let text="Every second with you feels magical. You are my forever. ❤️ ";
+let j=0;
+setInterval(()=>{
+if(j<text.length){
+document.getElementById("typing").innerHTML+=text.charAt(j);
+j++;
+}
+},50);
+
+/* Counter */
+let seconds=0;
+setInterval(()=>{
+seconds++;
+document.getElementById("counter").innerHTML="Love Seconds: "+seconds;
+},1000);
+
+/* Flip */
+function flip(card){
+card.classList.toggle("flipped");
+}
+
+/* Running NO */
+document.getElementById("no").addEventListener("mouseover",()=>{
+document.getElementById("no").style.top=Math.random()*200+"px";
+document.getElementById("no").style.left=Math.random()*200+"px";
+});
+
+/* Fireworks */
+function celebrate(){
+for(let k=0;k<50;k++){
+let f=document.createElement("div");
+f.className="fire";
+f.innerHTML="🎆";
+f.style.left=Math.random()*100+"vw";
+f.style.top=Math.random()*100+"vh";
+document.body.appendChild(f);
+setTimeout(()=>f.remove(),1000);
+}
+alert("Forever Begins 💖");
+}
+
+function scrollToSec(id){
+document.getElementById(id).scrollIntoView();
+}
+
+</script>
+</body>
+</html>
